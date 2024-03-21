@@ -28,4 +28,6 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = "120"
+vim.cmd("highlight ColorColumn ctermbg=235 guibg=#0F0F0F")
+
