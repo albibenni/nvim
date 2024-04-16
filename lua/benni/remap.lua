@@ -19,7 +19,10 @@ vim.keymap.set("n", "<leader>svwm", function()
 end)
 
 -- greatest remap ever
-vim.keymap.set("x", "<leader>p", [["_dP]])
+vim.keymap.set("x", "<leader>p", [["_dP]]) -- It’s the /dev/null of the Vim world - Black hole register "_, delete, paste
+-- Example:
+-- if you deleted three lines into the unnamed register with 3dd with the intent of pasting them elsewhere with p, 
+-- but you wanted to delete another line before doing so, you could do that with "_dd; line gone, and no harm done.
 
 -- next greatest remap ever : asbjornHaland
 vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
