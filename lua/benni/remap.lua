@@ -63,3 +63,6 @@ vim.keymap.set({"n", "v"}, "<leader>h", ":wincmd h<CR>")
 --vim.keymap.set({"n", "v"}, "<leader>j", ":wincmd j<CR>")
 --vim.keymap.set({"n", "v"}, "<leader>k", ":wincmd k<CR>")
 vim.keymap.set({"n", "v"}, "<leader>l", ":wincmd l<CR>")
+
+vim.keymap.set("n", "<leader>cpe", ":Copilot enable<CR>")
+vim.keymap.set("n", "<leader>cpd", ":Copilot disable<CR>")
