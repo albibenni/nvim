@@ -31,3 +31,8 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "120"
 vim.cmd("highlight ColorColumn ctermbg=235 guibg=#0F0F0F")
 
+vim.api.nvim_create_autocmd("VimEnter", {
+    callback = function()
+        vim.cmd("Copilot disable")
+    end,
+})
