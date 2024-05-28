@@ -19,3 +19,5 @@ require("cloak").setup({
     },
   },
 })
+
+-- :CloackEnable to hide 'secret' in file declared in `file_pattern`
