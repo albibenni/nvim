@@ -39,7 +39,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- Jump to the definition of the word under your cursor.
         --  This is where a variable was first declared, or where a function is defined, etc.
         --  To jump back, press <C-t>.
-        map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+        -- map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+        map('gd', require('telescope.builtin').lsp_definitions({ jump_type = "vsplit" }), '[G]oto [D]efinition')
 
         -- Find references for the word under your cursor.
         map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
@@ -76,15 +77,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- WARN: This is not Goto Definition, this is Goto Declaration.
         --  For example, in C this would take you to the header.
         map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-        vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-        vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
-        vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-        -- vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts) -- check if leader a
-        -- vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
-        -- vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
-        vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-        vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
-        vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
     end
 })
 
