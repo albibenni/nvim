@@ -1,4 +1,4 @@
-vim.opt.guicursor = ""
+-- vim.opt.guicursor = ""
 
 vim.g.have_nerd_font = true
 
@@ -14,10 +14,11 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
 vim.opt.smartindent = true
+
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
-vim.opt.cursorline = false
+vim.opt.cursorline = true
 
 vim.opt.wrap = false
 
@@ -32,14 +33,14 @@ vim.opt.incsearch = true
 
 vim.opt.termguicolors = true
 
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "120"
-vim.cmd("highlight ColorColumn ctermbg=235 guibg=#0F0F0F")
+-- vim.cmd("highlight ColorColumn ctermbg=235 guibg=#0F0F0F")
 
 --vim.api.nvim_create_autocmd("VimEnter", {
 --    callback = function()

@@ -13,7 +13,7 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "J", "mzJ`z") -- join next line and keep cursor position
 
 vim.keymap.set("n", "H", ":wincmd h<CR>")
-vim.keymap.set("n", "L", ":wincmd l<HR>")
+vim.keymap.set("n", "L", ":wincmd l<CR>")
 
 vim.keymap.set("n", "<C-d>", "<C-d>zz") -- half page down
 vim.keymap.set("n", "<C-u>", "<C-u>zz") -- half page up
@@ -72,7 +72,7 @@ vim.keymap.set("n", "<leader><leader>", ":so<CR>")
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, { desc = 'Show diagnostic [D]etails' })
-vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, {desc = 'Show [H]elp for function signature'})
+vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, { desc = 'Show [H]elp for function signature' })
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 
