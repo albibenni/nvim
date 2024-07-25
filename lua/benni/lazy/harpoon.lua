@@ -11,14 +11,14 @@ return {
             vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
             vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
-            vim.keymap.set("n", "<C-u>", function() harpoon:list():select(1) end)
-            vim.keymap.set("n", "<C-i>", function() harpoon:list():select(2) end)
-            vim.keymap.set("n", "<C-o>", function() harpoon:list():select(3) end)
-            vim.keymap.set("n", "<C-p>", function() harpoon:list():select(4) end)
-            vim.keymap.set("n", "<leader><C-u>", function() harpoon:list():replace_at(1) end)
-            vim.keymap.set("n", "<leader><C-i>", function() harpoon:list():replace_at(2) end)
-            vim.keymap.set("n", "<leader><C-o>", function() harpoon:list():replace_at(3) end)
-            vim.keymap.set("n", "<leader><C-p>", function() harpoon:list():replace_at(4) end)
+            vim.keymap.set("n", "<leader>u", function() harpoon:list():select(1) end)
+            vim.keymap.set("n", "<leader>i", function() harpoon:list():select(2) end)
+            vim.keymap.set("n", "<leader>o", function() harpoon:list():select(3) end)
+            vim.keymap.set("n", "<leader>p", function() harpoon:list():select(4) end)
+            vim.keymap.set("n", "<leader><S-u>", function() harpoon:list():replace_at(1) end)
+            vim.keymap.set("n", "<leader><S-i>", function() harpoon:list():replace_at(2) end)
+            vim.keymap.set("n", "<leader><S-o>", function() harpoon:list():replace_at(3) end)
+            vim.keymap.set("n", "<leader><S-p>", function() harpoon:list():replace_at(4) end)
         end
     },
 }
