@@ -21,6 +21,9 @@ return {
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
 		"folke/todo-comments.nvim",
+		config = function()
+			require("telescope").load_extension("fzf")
+		end,
 	},
 
 	config = function()
@@ -52,7 +55,6 @@ return {
 				},
 			},
 		})
-		telescope.load_extension("fzf")
 
 		keymap.set("n", "<leader>pf", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
 		keymap.set("n", "<C-p>", builtin.git_files, {})
