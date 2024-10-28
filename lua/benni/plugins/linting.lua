@@ -5,6 +5,8 @@ return {
 		local lint = require("lint")
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
+		lint.try_lint(nil, { ignore_errors = true })
+
 		lint.linters_by_ft = {
 			javascript = { "eslint_d", "eslint" },
 			typescript = { "eslint_d", "eslint" },
@@ -14,6 +16,7 @@ return {
 			css = { "stylelint" },
 			go = { "golangcilint" },
 			python = { "pylint" },
+			json = { "jsonlint" },
 		}
 
 		local eslint = lint.linters.eslint_d
