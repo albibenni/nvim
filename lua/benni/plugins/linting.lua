@@ -15,6 +15,7 @@ return {
 			go = { "golangcilint" },
 			python = { "pylint" },
 			json = { "jsonlint" },
+			c = { "cpplint" },
 		}
 
 		local eslint = lint.linters.eslint_d
