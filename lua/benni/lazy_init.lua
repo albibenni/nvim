@@ -11,10 +11,14 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({ { import = "benni.plugins" }, { import = "benni.plugins.lsp" } }, {
-	rocks = {
-		enabled = false,
-	},
+require("lazy").setup({
+	--{ import = "lazyvim.plugins.extras.ai.copilot-chat" },
+	{ import = "benni.plugins" },
+	{ import = "benni.plugins.lsp" },
+}, {
+	-- rocks = {
+	-- 	hererocks = true,
+	-- },
 	install = {
 		colorscheme = { "nightfly" },
 	},
