@@ -9,6 +9,7 @@ if not vim.loop.fs_stat(lazypath) then
 		lazypath,
 	})
 end
+-- Put lazy.nvim in runtimepath for neovim to find it!
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
