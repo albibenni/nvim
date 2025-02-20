@@ -25,48 +25,53 @@ return {
 
 	config = function()
 		local telescope = require("telescope")
-		local actions = require("telescope.actions")
-		local transform_mod = require("telescope.actions.mt").transform_mod
-
-		local trouble = require("trouble")
+		-- local actions = require("telescope.actions")
+		-- local transform_mod = require("telescope.actions.mt").transform_mod
+		--
+		-- local trouble = require("trouble")
 
 		local builtin = require("telescope.builtin")
-		local keymap = vim.keymap
-		local trouble_telescope = require("trouble.sources.telescope")
-		local custom_actions = transform_mod({
-			open_trouble_qflist = function(prompt_bufnr)
-				trouble.toggle("quickfix")
-			end,
-		})
+		-- local trouble_telescope = require("trouble.sources.telescope")
+		-- local custom_actions = transform_mod({
+		-- 	open_trouble_qflist = function(prompt_bufnr)
+		-- 		trouble.toggle("quickfix")
+		-- 	end,
+		-- })
 
-		telescope.setup({
-			defaults = {
-				path_display = { "smart" },
-				mappings = {
-					i = {
-						["<C-k>"] = actions.move_selection_previous, -- move to prev result
-						["<C-j>"] = actions.move_selection_next, -- move to next result
-						["<C-q>"] = actions.send_selected_to_qflist + custom_actions.open_trouble_qflist,
-						["<C-t>"] = trouble_telescope.open,
-					},
-				},
-			},
-		})
+		-- telescope.setup({
+		-- 	defaults = {
+		-- 		path_display = { "smart" },
+		-- 		mappings = {
+		-- 			i = {
+		-- 				["<C-k>"] = actions.move_selection_previous, -- move to prev result
+		-- 				["<C-j>"] = actions.move_selection_next, -- move to next result
+		-- 				["<C-q>"] = actions.send_selected_to_qflist + custom_actions.open_trouble_qflist,
+		-- 				["<C-t>"] = trouble_telescope.open,
+		-- 			},
+		-- 		},
+		-- 	},
+		-- })
 		telescope.load_extension("fzf")
 
-		keymap.set("n", "<leader>pf", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
-		keymap.set("n", "<C-p>", builtin.git_files, {})
-		keymap.set("n", "<leader>ps", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
-		keymap.set("n", "<leader>pWs", function()
+		--vim.keymap.set("n", "<leader>pf", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
+		vim.keymap.set("n", "<leader>pf", builtin.find_files, { desc = "Fuzzy find files in cwd" })
+		vim.keymap.set("n", "<C-p>", builtin.git_files, {})
+		vim.keymap.set("n", "<leader>ps", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
+		vim.keymap.set("n", "<leader>pws", function()
 			local word = vim.fn.expand("<cWORD>")
 			builtin.grep_string({ search = word })
 		end)
-		keymap.set("n", "<leader>pws", function()
+		vim.keymap.set("n", "<leader>pws", function()
 			builtin.grep_string({ search = vim.fn.input("Grep > ") })
 		end, {})
-		keymap.set("n", "<leader>pt", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
-		keymap.set("n", "<leader>pc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
+		vim.keymap.set("n", "<leader>pt", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
+		vim.keymap.set(
+			"n",
+			"<leader>pc",
+			"<cmd>Telescope grep_string<cr>",
+			{ desc = "Find string under cursor in cwd" }
+		)
 
-		keymap.set("n", "<leader>vh", builtin.help_tags, {})
+		vim.keymap.set("n", "<leader>vh", builtin.help_tags, {})
 	end,
 }
