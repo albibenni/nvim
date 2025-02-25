@@ -61,8 +61,8 @@ vim.keymap.set("n", "<leader>vpk", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/ben
 vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>") -- make it rain - cool
 
 -- copilot disable
-vim.keymap.set("n", "<leader>cpe", ":Copilot enable<CR>")
-vim.keymap.set("n", "<leader>cpd", ":Copilot disable<CR>")
+vim.keymap.set("n", "<leader>ce", ":Copilot enable<CR>")
+vim.keymap.set("n", "<leader>cd", ":Copilot disable<CR>")
 
 -- remap write command
 vim.keymap.set("n", "<leader>w", ":w<CR>")

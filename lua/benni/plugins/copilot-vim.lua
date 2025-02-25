@@ -2,7 +2,7 @@ return {
 	-- Setup copilot.vim
 	{
 		"github/copilot.vim",
-		cmd = { "CopilotChat" },
+		--cmd = { "CopilotChat" },
 		event = "BufEnter",
 		config = function()
 			-- For copilot.vim
