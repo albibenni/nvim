@@ -69,7 +69,7 @@ return {
 			chat.setup(opts)
 
 			chat.setup({
-				model = "claude-3.5-sonnet",
+				model = "claude-3.7-sonnet",
 				window = {
 					layout = "float",
 				},
