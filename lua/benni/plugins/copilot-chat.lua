@@ -123,14 +123,24 @@ return {
 					local actions = require("CopilotChat.actions")
 					require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
 				end,
+				mode = "v",
 				desc = "CopilotChat - Prompt actions",
 			},
 			{
-				"<leader>ap",
-				":lua require('CopilotChat.integrations.telescope').pick(require('CopilotChat.actions').prompt_actions({selection = require('CopilotChat.select').visual}))<CR>",
-				mode = "x",
+				"<leader>cc",
+				function()
+					local actions = require("CopilotChat.actions")
+					require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
+				end,
+				mode = "n",
 				desc = "CopilotChat - Prompt actions",
 			},
+			-- {
+			-- 	"<leader>ap",
+			-- 	":lua require('CopilotChat.integrations.telescope').pick(require('CopilotChat.actions').prompt_actions({selection = require('CopilotChat.select').visual}))<CR>",
+			-- 	mode = "x",
+			-- 	desc = "CopilotChat - Prompt actions",
+			-- },
 			-- Code related commands
 			{ "<leader>ae", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
 			{ "<leader>at", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
