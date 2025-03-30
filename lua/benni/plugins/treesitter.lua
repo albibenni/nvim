@@ -6,7 +6,8 @@ return {
 		"windwp/nvim-ts-autotag",
 	},
 	config = function()
-		require("nvim-treesitter.configs").setup({
+		local treesitter = require("nvim-treesitter.configs")
+		treesitter.setup({
 			-- A list of parser names, or "all"
 			ensure_installed = {
 				"vimdoc",
@@ -33,6 +34,8 @@ return {
 				"gitignore",
 				"query",
 				"vimdoc",
+				"go",
+				"rust",
 				"c",
 			},
 
@@ -43,6 +46,9 @@ return {
 			-- Recommendation: set to false if you don"t have `tree-sitter` CLI installed locally
 			auto_install = true,
 
+			autotag = {
+				enable = true,
+			},
 			indent = {
 				enable = true,
 			},
