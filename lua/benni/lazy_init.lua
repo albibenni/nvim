@@ -13,7 +13,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	--{ import = "lazyvim.plugins.extras.ai.copilot-chat" },
 	{ import = "benni.plugins" },
 	{ import = "benni.plugins.lsp" },
 }, {
