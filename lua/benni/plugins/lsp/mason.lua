@@ -29,13 +29,18 @@ return {
 			ensure_installed = {
 				"lua_ls",
 				-- "tsserver",
+				"ts_ls",
 				"html",
 				"cssls",
 				"tailwindcss",
-				"lua_ls",
 				"graphql",
+				"dockerls",
+				"pyright",
+				"sqlls",
 				"emmet_ls",
 				"gopls",
+				"zls",
+				"rust_analyzer",
 			},
 		})
 
@@ -44,8 +49,16 @@ return {
 				"prettier", -- prettier formatter
 				"stylua", -- lua formatter
 				"yamlfmt", -- yml formatter
-				"goimports",
-				"eslint_d",
+				"golangci-lint", --go lint
+				"goimports", --go formatter
+				"eslint_d", -- js lint
+				"cpplint", -- c c++ lint
+				"isort", -- python formatter
+				"black", -- python formatter
+				"pylint", -- python lint
+				"jsonlint", -- json lint
+				"yamlfmt", -- yaml format
+				"clang-format", -- c c++ format
 			},
 		})
 	end,
