@@ -49,8 +49,8 @@ return {
 				"prettier", -- prettier formatter
 				"stylua", -- lua formatter
 				"yamlfmt", -- yml formatter
-				"golangci-lint", --go lint
-				"goimports", --go formatter
+				"golangci-lint", -- go linter
+				--"goimports", --go formatter
 				"eslint_d", -- js lint
 				"cpplint", -- c c++ lint
 				"isort", -- python formatter

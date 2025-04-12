@@ -20,7 +20,7 @@ return {
 				liquid = { "prettier" },
 				rust = { "rustfmt", lsp_format = "fallback" },
 				c = { "clang-format" },
-				go = { "goimports", "gofmt" },
+				go = { "gofmt" },
 				lua = { "stylua" },
 				python = { "isort", "black" },
 			},

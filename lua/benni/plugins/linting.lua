@@ -4,6 +4,15 @@ return {
 	config = function()
 		local lint = require("lint")
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
+		local goci = lint.linters.golangcilint
+
+		goci.args = {
+			"run",
+			"--output.json.path=stdout",
+			"--show-stats=false",
+			"--issues-exit-code",
+			"0",
+		}
 
 		lint.linters_by_ft = {
 			javascript = { "eslint_d" },
@@ -12,7 +21,7 @@ return {
 			typescriptreact = { "eslint_d" },
 			svelte = { "eslint_d" },
 			css = { "stylelint" },
-			go = { "golangci-lint" },
+			go = { "golangcilint" },
 			python = { "pylint" },
 			json = { "jsonlint" },
 			c = { "cpplint" },
