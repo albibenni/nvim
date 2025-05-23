@@ -2,11 +2,25 @@ return {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
+		"williamboman/mason.nvim",
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 		{ "folke/neodev.nvim", opts = {} },
 		"j-hui/fidget.nvim",
 	},
+	-- opts = {
+	-- 	---@type lspconfig.options
+	-- 	servers = {
+	-- 		eslint = {
+	-- 			settings = {
+	-- 				workingDirectories = { mode = "auto" },
+	-- 				experimental = {
+	-- 					useFlatConfig = true,
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
 	config = function()
 		-- import lspconfig plugin
 		local lspconfig = require("lspconfig")
