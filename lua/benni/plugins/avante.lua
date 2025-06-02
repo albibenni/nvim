@@ -9,7 +9,13 @@ return {
 		---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
 		provider = "copilot",
 		copilot = {
-			model = "claude-3.7-sonnet",
+			-- endpoint = "https://api.githubcopilot.com",
+			model = "claude-sonnet-4",
+			-- proxy = nil, -- [protocol://]host[:port] Use this proxy
+			-- allow_insecure = false, -- Allow insecure server connections
+			-- timeout = 30000, -- Timeout in milliseconds
+			-- temperature = 0,
+			-- max_tokens = 20480,
 		},
 		-- openai = {
 		-- 	endpoint = "https://api.openai.com/v1",
