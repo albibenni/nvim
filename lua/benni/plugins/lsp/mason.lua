@@ -3,13 +3,34 @@ return {
 	dependencies = {
 		"williamboman/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		"mfussenegger/nvim-jdtls",
 	},
 	config = function()
 		-- import mason
 		local mason = require("mason")
 
+		-- {
+		-- 	"williamboman/mason-lspconfig.nvim",
+		-- 	opts = {
+		-- 		automatic_enable = {
+		-- 			exclude = {
+		-- 				--needs external plugin
+		-- 				"jdtls",
+		-- 			},
+		-- 		},
+		-- 	},
+		-- },
+
 		-- import mason-lspconfig
 		local mason_lspconfig = require("mason-lspconfig")
+		mason_lspconfig.opts = {
+			automatic_enable = {
+				exclude = {
+					--needs external plugin
+					"jdtls",
+				},
+			},
+		}
 
 		local mason_tool_installer = require("mason-tool-installer")
 
