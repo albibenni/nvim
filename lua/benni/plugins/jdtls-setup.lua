@@ -4,7 +4,12 @@ return {
 		ft = { "java" },
 		config = function()
 			local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-			local workspace_dir = "~/jdtls-data/" .. project_name
+			local workspace_dir = vim.fn.expand("~") .. "/jdtls-data/" .. project_name
+
+			-- Get the correct paths
+			local jdtls_install = vim.fn.expand("~") .. "/.local/share/nvim/mason/packages/jdtls"
+			local jar_path = vim.fn.glob(jdtls_install .. "/plugins/org.eclipse.equinox.launcher_*.jar")
+
 			local config = {
 				-- The command that starts the language server
 				-- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
@@ -27,18 +32,11 @@ return {
 
 					-- 💀
 					"-jar",
-					"~/benni/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_1.7.0.v20250519-0528.jar",
-					-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                       ^^^^^^^^^^^^^^
-					-- Must point to the                                                     Change this to
-					-- eclipse.jdt.ls installation                                           the actual version
+					jar_path,
 
 					-- 💀
 					"-configuration",
-					"~/benni/.local/share/nvim/mason/packages/jdtls/config_mac_arm",
-					-- "/home/hydroakri/.local/share/nvim/mason/packages/jdtls/config_linux",
-					-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        ^^^^^^
-					-- Must point to the                      Change to one of `linux`, `win` or `mac`
-					-- eclipse.jdt.ls installation            Depending on your system.
+					jdtls_install .. "/config_mac_arm",
 
 					-- 💀
 					-- See `data directory configuration` section in the README
