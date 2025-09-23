@@ -1,8 +1,20 @@
 return {
 	"neovim/nvim-lspconfig",
+	"williamboman/mason.nvim",
+	{
+		"williamboman/mason-lspconfig.nvim",
+		opts = {
+			automatic_enable = {
+				exclude = {
+					--needs external plugin
+					"jdtls",
+				},
+			},
+		},
+	},
+	"mfussenegger/nvim-jdtls",
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
-		"williamboman/mason.nvim",
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 		{ "folke/neodev.nvim", opts = {} },
@@ -27,6 +39,15 @@ return {
 
 		-- import mason_lspconfig plugin
 		local mason_lspconfig = require("mason-lspconfig")
+		-- IMPORTANT: workaround to avoid mason-lspconfig not loading servers listed in ensure_installed
+		-- mason_lspconfig.opts = {
+		-- 	automatic_enable = {
+		-- 		exclude = {
+		-- 			-- needs external plugin
+		-- 			"jdtls",
+		-- 		},
+		-- 	},
+		-- }
 
 		-- import cmp-nvim-lsp plugin
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
