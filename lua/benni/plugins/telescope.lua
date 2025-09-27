@@ -18,7 +18,8 @@ return {
 		-- { "nvim-telescope/telescope-ui-select.nvim" },
 		-- -- Useful for getting pretty icons, but requires a Nerd Font.
 		-- { "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
-		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+		{ "nvim-telescope/telescope-fzf-native.nvim", build = "cmake" },
+		-- { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' }
 		"nvim-tree/nvim-web-devicons",
 		"folke/todo-comments.nvim",
 	},
