@@ -1,5 +1,6 @@
 return {
 	"folke/tokyonight.nvim",
+	lazy = false,
 	priority = 1000,
 	config = function()
 		local transparent = true -- set to true if you would like to enable transparency
@@ -22,7 +23,7 @@ return {
 				floats = transparent and "transparent" or "dark",
 			},
 			on_colors = function(colors)
-				colors.bg = bg
+				colors.bg = transparent and colors.none or bg
 				colors.bg_dark = transparent and colors.none or bg_dark
 				colors.bg_float = transparent and colors.none or bg_dark
 				colors.bg_highlight = bg_highlight
@@ -42,6 +43,65 @@ return {
 
 		vim.cmd("colorscheme tokyonight")
 	end,
+	-- Load all theme plugins but don't apply them
+	-- This ensures all colorschemes are available for hot-reloading
+	-- {
+	-- 	"ribru17/bamboo.nvim",
+	-- 	lazy = true,
+	-- 	priority = 1000,
+	-- },
+	-- {
+	-- 	"catppuccin/nvim",
+	-- 	name = "catppuccin",
+	-- 	lazy = true,
+	-- 	priority = 1000,
+	-- },
+	-- {
+	-- 	"sainnhe/everforest",
+	-- 	lazy = true,
+	-- 	priority = 1000,
+	-- },
+	-- {
+	-- 	"kepano/flexoki-neovim",
+	-- 	lazy = true,
+	-- 	priority = 1000,
+	-- },
+	-- {
+	-- 	"ellisonleao/gruvbox.nvim",
+	-- 	lazy = true,
+	-- 	priority = 1000,
+	-- },
+	-- {
+	-- 	"rebelot/kanagawa.nvim",
+	-- 	lazy = true,
+	-- 	priority = 1000,
+	-- },
+	-- {
+	-- 	"tahayvr/matteblack.nvim",
+	-- 	lazy = true,
+	-- 	priority = 1000,
+	-- },
+	-- {
+	-- 	"loctvl842/monokai-pro.nvim",
+	-- 	lazy = true,
+	-- 	priority = 1000,
+	-- },
+	-- {
+	-- 	"shaunsingh/nord.nvim",
+	-- 	lazy = true,
+	-- 	priority = 1000,
+	-- },
+	-- {
+	-- 	"rose-pine/neovim",
+	-- 	name = "rose-pine",
+	-- 	lazy = true,
+	-- 	priority = 1000,
+	-- },
+	-- {
+	-- 	"folke/tokyonight.nvim",
+	-- 	lazy = true,
+	-- 	priority = 1000,
+	-- },
 }
 
 -- return {
@@ -69,7 +129,7 @@ return {
 -- 				floats = transparent and "transparent" or "dark",
 -- 			},
 -- 			on_colors = function(colors)
--- 				colors.bg = bg
+-- 				colors.bg = transparent and colors.none or bg
 -- 				colors.bg_dark = transparent and colors.none or bg_dark
 -- 				colors.bg_float = transparent and colors.none or bg_dark
 -- 				colors.bg_highlight = bg_highlight

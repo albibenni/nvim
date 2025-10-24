@@ -85,3 +85,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
+
+-- TEST hotreload
+vim.keymap.set("n", "<leader>tr", function()
+	vim.api.nvim_exec_autocmds("User", { pattern = "LazyReload" })
+end, { desc = "Reload theme" })
