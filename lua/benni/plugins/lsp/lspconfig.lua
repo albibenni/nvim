@@ -2,7 +2,8 @@ return {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
-		"williamboman/mason.nvim",
+		"mason-org/mason.nvim",
+		"mason-org/mason-lspconfig.nvim",
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 		{ "folke/neodev.nvim", opts = {} },
@@ -79,8 +80,7 @@ return {
 			},
 		})
 
-		-- alternative to deprecations
-		-- Configure each server using vim.lsp.config
+		-- Configure servers with custom settings using vim.lsp.config
 		local function setup_server(server_name, config)
 			config = config or {}
 			config.capabilities = capabilities
@@ -91,68 +91,55 @@ return {
 			end
 
 			vim.lsp.config(server_name, config)
-			vim.lsp.enable(server_name)
 		end
 
-		-- Setup handlers for mason-installed servers
-		mason_lspconfig.setup_handlers({
-			-- Default handler for all servers
-			function(server_name)
-				setup_server(server_name)
-			end,
-
-			-- Svelte with special config
-			["svelte"] = function()
-				setup_server("svelte", {
-					on_attach = function(client, bufnr)
-						vim.api.nvim_create_autocmd("BufWritePost", {
-							pattern = { "*.js", "*.ts" },
-							callback = function(ctx)
-								client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
-							end,
-						})
+		-- Configure custom servers before mason-lspconfig enables them
+		-- Svelte with special config
+		setup_server("svelte", {
+			on_attach = function(client, bufnr)
+				vim.api.nvim_create_autocmd("BufWritePost", {
+					pattern = { "*.js", "*.ts" },
+					callback = function(ctx)
+						client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
 					end,
 				})
 			end,
-
-			-- GraphQL with custom filetypes
-			["graphql"] = function()
-				setup_server("graphql", {
-					filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
-				})
-			end,
-
-			-- Emmet with custom filetypes
-			["emmet_ls"] = function()
-				setup_server("emmet_ls", {
-					filetypes = {
-						"html",
-						"typescriptreact",
-						"javascriptreact",
-						"css",
-						"sass",
-						"scss",
-						"less",
-						"svelte",
-					},
-				})
-			end,
-
-			-- Lua LSP with special settings
-			["lua_ls"] = function()
-				setup_server("lua_ls", {
-					settings = {
-						Lua = {
-							diagnostics = {
-								globals = { "vim" },
-							},
-							completion = {
-								callSnippet = "Replace",
-							},
-						},
-					},
-				})
-			end,
 		})
+
+		-- GraphQL with custom filetypes
+		setup_server("graphql", {
+			filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
+		})
+
+		-- Emmet with custom filetypes
+		setup_server("emmet_ls", {
+			filetypes = {
+				"html",
+				"typescriptreact",
+				"javascriptreact",
+				"css",
+				"sass",
+				"scss",
+				"less",
+				"svelte",
+			},
+		})
+
+		-- Lua LSP with special settings
+		setup_server("lua_ls", {
+			settings = {
+				Lua = {
+					diagnostics = {
+						globals = { "vim" },
+					},
+					completion = {
+						callSnippet = "Replace",
+					},
+				},
+			},
+		})
+
+		-- Setup default config for all other servers
+		setup_server("*", {})
 	end,
 }
