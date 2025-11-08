@@ -14,9 +14,8 @@ return {
 				-- The command that starts the language server
 				-- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
 				cmd = {
-
-					-- 💀
-					"java", --"/opt/homebrew/opt/openjdk@25/bin/java", --TODO: Change this to your java version
+					-- Java executable (uses system Java from /usr/bin/java on Arch)
+					"java",
 
 					"-Declipse.application=org.eclipse.jdt.ls.core.id1",
 					"-Dosgi.bundles.defaultStartLevel=4",
@@ -34,9 +33,9 @@ return {
 					"-jar",
 					jar_path,
 
-					-- 💀
+					-- Configuration directory for Linux
 					"-configuration",
-					jdtls_install .. "/config_mac_arm",
+					jdtls_install .. "/config_linux",
 
 					-- 💀
 					-- See `data directory configuration` section in the README
