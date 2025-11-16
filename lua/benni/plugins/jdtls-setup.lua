@@ -2,6 +2,9 @@ return {
 	{
 		"mfussenegger/nvim-jdtls",
 		ft = { "java" },
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
 		config = function()
 			local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 			local workspace_dir = vim.fn.expand("~") .. "/jdtls-data/" .. project_name
@@ -69,6 +72,13 @@ return {
 			-- This starts a new client & server,
 			-- or attaches to an existing client & server depending on the `root_dir`.
 			require("jdtls").start_or_attach(config)
+
+			-- Ensure Treesitter highlighting is applied after JDTLS starts
+			vim.defer_fn(function()
+				if vim.bo.filetype == "java" then
+					vim.cmd("edit")
+				end
+			end, 100)
 		end,
 	},
 }

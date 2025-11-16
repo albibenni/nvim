@@ -31,9 +31,9 @@ require("lazy").setup({
 })
 
 -- require("lazy").setup("trouble", { defaults = { lazy = true } })
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "java",
-	callback = function()
-		require("benni.plugins.jdtls-setup").setup()
-	end,
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+-- 	pattern = "java",
+-- 	callback = function()
+-- 		require("benni.plugins.jdtls-setup").setup()
+-- 	end,
+-- })
