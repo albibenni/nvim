@@ -62,6 +62,7 @@ return {
 				"gopls",
 				"zls",
 				"rust_analyzer",
+				"bash-language-server",
 				"jdtls",
 			},
 		})
