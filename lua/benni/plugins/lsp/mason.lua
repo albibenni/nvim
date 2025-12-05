@@ -62,8 +62,8 @@ return {
 				"gopls",
 				"zls",
 				"rust_analyzer",
-				"bashls",
 				"jdtls",
+				"bashls", -- bash
 			},
 		})
 
@@ -82,6 +82,7 @@ return {
 				"jsonlint", -- json lint
 				"yamlfmt", -- yaml format
 				"clang-format", -- c c++ format
+				"shfmt", -- bash formatter
 			},
 		})
 	end,
