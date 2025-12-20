@@ -56,8 +56,8 @@ vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><
 
 vim.keymap.set("n", "<leader>xx", "<cmd>!chmod +x %<CR>", { silent = true }) -- make file executable
 
-vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/.config/nvim/after/plugin/lsp.lua<CR>") -- go to plugins
-vim.keymap.set("n", "<leader>vpk", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/benni/remap.lua<CR>") -- go to keymap
+vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/dotfiles/nvim/.config/nvim/after/plugin/lsp.lua<CR>") -- go to plugins
+vim.keymap.set("n", "<leader>vpk", "<cmd>e ~/dotfiles/nvim/.config/nvim/lua/benni/remap.lua<CR>") -- go to keymap
 
 vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>") -- make it rain - cool
 
