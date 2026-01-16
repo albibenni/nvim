@@ -64,6 +64,7 @@ return {
 				"rust_analyzer",
 				"jdtls",
 				"bashls", -- bash
+				"eslint",
 			},
 		})
 
