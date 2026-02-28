@@ -85,3 +85,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
+
+-- Run tmux sessionizer
+vim.keymap.set("n", "<C-f>", function()
+	require("benni.tmux_sessionizer").pick_and_switch()
+end, { desc = "Telescope tmux sessionizer" })
