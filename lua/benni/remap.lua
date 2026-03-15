@@ -90,3 +90,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.keymap.set("n", "<leader>tr", function()
 	vim.api.nvim_exec_autocmds("User", { pattern = "LazyReload" })
 end, { desc = "Reload theme" })
+
+vim.keymap.set("n", "<C-f>", function()
+	require("benni.tmux_sessionizer").pick_and_switch()
+end, { desc = "Telescope tmux sessionizer" })
