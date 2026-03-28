@@ -26,12 +26,12 @@ return {
 
 	config = function()
 		local telescope = require("telescope")
-		-- local actions = require("telescope.actions")
+		local builtin = require("telescope.builtin")
+		local actions = require("telescope.actions")
 		-- local transform_mod = require("telescope.actions.mt").transform_mod
 		--
 		-- local trouble = require("trouble")
 
-		local builtin = require("telescope.builtin")
 		-- local trouble_telescope = require("trouble.sources.telescope")
 		-- local custom_actions = transform_mod({
 		-- 	open_trouble_qflist = function(prompt_bufnr)
@@ -39,19 +39,37 @@ return {
 		-- 	end,
 		-- })
 
-		-- telescope.setup({
-		-- 	defaults = {
-		-- 		path_display = { "smart" },
-		-- 		mappings = {
-		-- 			i = {
-		-- 				["<C-k>"] = actions.move_selection_previous, -- move to prev result
-		-- 				["<C-j>"] = actions.move_selection_next, -- move to next result
-		-- 				["<C-q>"] = actions.send_selected_to_qflist + custom_actions.open_trouble_qflist,
-		-- 				["<C-t>"] = trouble_telescope.open,
-		-- 			},
-		-- 		},
-		-- 	},
-		-- })
+		telescope.setup({
+			defaults = {
+				-- show filename before path
+				path_display = { "filename_first" },
+
+				-- smart-case: case-insensitive when all lowercase, sensitive otherwise
+				-- --hidden: include dotfiles
+				vimgrep_arguments = {
+					"rg",
+					"--color=never",
+					"--no-heading",
+					"--with-filename",
+					"--line-number",
+					"--column",
+					"--smart-case",
+					"--hidden",
+				},
+
+				mappings = {
+					i = {
+						["<C-k>"] = actions.move_selection_previous,
+						["<C-j>"] = actions.move_selection_next,
+						["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+						["<esc>"] = actions.close,
+					},
+				},
+
+				file_ignore_patterns = { "%.git/", "node_modules/" },
+			},
+		})
+
 		telescope.load_extension("fzf")
 
 		vim.keymap.set("n", "<leader>pf", builtin.find_files, { desc = "Fuzzy find files in cwd" })
