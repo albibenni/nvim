@@ -13,6 +13,11 @@ return {
 		-- 	"0",
 		-- }
 
+		local pylint = lint.linters.pylint
+		pylint.cmd = (
+			vim.fn.glob(vim.fn.getcwd() .. "/.venv/bin/pylint") ~= "" and vim.fn.getcwd() .. "/.venv/bin/pylint"
+		) or "pylint"
+
 		lint.linters_by_ft = {
 			javascript = { "eslint_d" },
 			typescript = { "eslint_d" },
