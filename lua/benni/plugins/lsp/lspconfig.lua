@@ -139,6 +139,12 @@ return {
 			},
 		})
 
+		-- sourcekit-lsp ships with Xcode on macOS, not available via Mason
+		local sourcekit_config = require("benni.lsp.sourcekit")
+		sourcekit_config.capabilities = capabilities
+		vim.lsp.config("sourcekit", sourcekit_config)
+		vim.lsp.enable("sourcekit")
+
 		-- Setup default config for all other servers
 		setup_server("*", {})
 	end,
