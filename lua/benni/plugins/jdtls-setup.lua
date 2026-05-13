@@ -16,7 +16,8 @@ return {
 				cmd = {
 
 					-- 💀
-					"java", --"/opt/homebrew/opt/openjdk@25/bin/java", --TODO: Change this to your java version
+					"/opt/homebrew/opt/openjdk@25/bin/java", -- TODO: change java version here
+					-- PREVIOUSLY  "java", --"/opt/homebrew/opt/openjdk@25/bin/java",
 
 					"-Declipse.application=org.eclipse.jdt.ls.core.id1",
 					"-Dosgi.bundles.defaultStartLevel=4",
