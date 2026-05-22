@@ -7,13 +7,13 @@ return {
 	priority = 49,
 
 	config = function()
-		local presets = require("markview.presets")
-
-		local markview = require("markview")
-
-		markview.markdown = {
-			headings = presets.headings.arrowed,
-		}
+		require("markview").setup({
+			markdown = {
+				headings = require("markview.presets").headings.arrowed,
+			},
+			-- This ensures it attaches to LSP hover windows
+			preview_mode = "view",
+		})
 	end,
 
 	-- For blink.cmp's completion

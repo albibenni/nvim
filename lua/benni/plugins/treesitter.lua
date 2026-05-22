@@ -1,5 +1,6 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
+	branch = "main", -- REQUIRED for Neovim 0.12
 	event = { "BufReadPre", "BufNewFile" },
 	build = ":TSUpdate",
 	dependencies = {
@@ -7,58 +8,56 @@ return {
 	},
 	config = function()
 		local treesitter = require("nvim-treesitter")
-		treesitter.setup({
-			-- A list of parser names, or "all"
-			ensure_installed = {
-				"vimdoc",
-				"javascript",
-				"typescript",
-				"tsx",
-				"jsdoc",
-				"json",
-				"yaml",
-				"html",
-				"css",
-				"prisma",
-				"markdown",
-				"markdown_inline",
-				"svelte",
-				"graphql",
-				"bash",
-				"lua",
-				"vim",
-				"dockerfile",
-				"gitignore",
-				"query",
-				"go",
-				"rust",
-				"c",
-				"java",
+
+		-- Register custom templ parser
+		require("nvim-treesitter.parsers").templ = {
+			install_info = {
+				url = "https://github.com/vrischmann/tree-sitter-templ.git",
+				files = { "src/parser.c", "src/scanner.c" },
+				branch = "master",
 			},
+		}
 
-			-- Install parsers synchronously (only applied to `ensure_installed`)
+		-- List of parsers to ensure are installed
+		local parsers = {
+			"vimdoc",
+			"javascript",
+			"typescript",
+			"tsx",
+			"jsdoc",
+			"json",
+			"yaml",
+			"html",
+			"css",
+			"prisma",
+			"markdown",
+			"markdown_inline",
+			"svelte",
+			"graphql",
+			"bash",
+			"lua",
+			"vim",
+			"dockerfile",
+			"gitignore",
+			"query",
+			"go",
+			"rust",
+			"c",
+			"java",
+			"templ",
+		}
+
+		-- Setup treesitter modules
+		treesitter.setup({
+			ensure_installed = parsers,
 			sync_install = false,
-
-			-- Automatically install missing parsers when entering buffer
-			-- Recommendation: set to false if you don"t have `tree-sitter` CLI installed locally
 			auto_install = true,
-
-			autotag = {
-				enable = true,
+			highlight = {
+				enable = true, -- Enable this even in 0.12 for some plugins/modules
+				additional_vim_regex_highlighting = { "markdown" },
 			},
 			indent = {
 				enable = true,
-			},
-
-			highlight = {
-				-- `false` will disable the whole extension
-				enable = true,
-
-				-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-				-- Set this to `true` if you depend on "syntax" being enabled (like for indentation).
-				-- Using this option may slow down your editor, and you may see some duplicate highlights.
-				-- Instead of true it can also be a list of languages
-				additional_vim_regex_highlighting = { "markdown" },
 			},
 			incremental_selection = {
 				enable = true,
@@ -71,15 +70,33 @@ return {
 			},
 		})
 
-		local treesitter_parser_config = require("nvim-treesitter.parsers")
-		treesitter_parser_config.templ = {
-			install_info = {
-				url = "https://github.com/vrischmann/tree-sitter-templ.git",
-				files = { "src/parser.c", "src/scanner.c" },
-				branch = "master",
-			},
+		-- Setup autotag (new way)
+		require("nvim-ts-autotag").setup()
+
+		-- Native Neovim 0.12 Treesitter highlighting
+		vim.api.nvim_create_autocmd("FileType", {
+			callback = function(args)
+				local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype) or vim.bo[args.buf].filetype
+				if lang and pcall(vim.treesitter.language.inspect, lang) then
+					vim.treesitter.start(args.buf, lang)
+				end
+			end,
+		})
+
+		-- Enable Treesitter highlighting in markdown code blocks (crucial for docs)
+		vim.g.markdown_fenced_languages = {
+			"ts=typescript",
+			"js=javascript",
+			"python",
+			"lua",
+			"rust",
+			"go",
+			"c",
+			"cpp",
 		}
 
-		vim.treesitter.language.register("templ", "templ")
+		-- Ensure associations for documentation and help
+		vim.treesitter.language.add("markdown", { filetype = "lazyhelp" })
+		vim.treesitter.language.add("vimdoc", { filetype = "help" })
 	end,
 }
