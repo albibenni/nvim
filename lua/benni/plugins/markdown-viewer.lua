@@ -12,7 +12,7 @@ return {
 		local markview = require("markview")
 
 		markview.markdown = {
-			headigns = presets.headings.arrowed,
+			headings = presets.headings.arrowed,
 		}
 	end,
 
