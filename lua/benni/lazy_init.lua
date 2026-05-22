@@ -30,6 +30,14 @@ require("lazy").setup({
 	change_detection = { notify = false },
 })
 
+-- Map C-k to show documentation in Lazy UI (consistent with LSP hover)
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "lazy",
+	callback = function()
+		vim.keymap.set("n", "<C-k>", "K", { buffer = true, remap = true, desc = "Show Plugin Docs" })
+	end,
+})
+
 -- require("lazy").setup("trouble", { defaults = { lazy = true } })
 -- vim.api.nvim_create_autocmd("FileType", {
 -- 	pattern = "java",

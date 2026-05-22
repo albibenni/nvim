@@ -11,63 +11,48 @@ return {
 	},
 
 	config = function()
-		local mason_lspconfig = require("mason-lspconfig")
-
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
+
+		-- Neovim 0.11+ way to style floating windows globally
+		vim.o.winborder = "rounded"
+
+		-- Documentation hover styling
+		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+			border = "rounded",
+		})
+		vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+			border = "rounded",
+		})
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 			callback = function(event)
-				-- vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
 				local map = function(keys, func, desc)
 					vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 				end
-				-- Jump to the definition of the word under your cursor.
-				--  This is where a variable was first declared, or where a function is defined, etc.
-				--  To jump back, press <C-t>.
+
 				map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
-
-				-- Find references for the word under your cursor.
 				map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
-
-				-- Jump to the implementation of the word under your cursor.
-				--  Useful when your language has ways of declaring types without an actual implementation.
 				map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
-
-				-- Jump to the type of the word under your cursor.
-				--  Useful when you're not sure what type a variable is and you want to see
-				--  the definition of its *type*, not where it was *defined*.
 				map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
-
-				-- Fuzzy find all the symbols in your current document.
-				--  Symbols are things like variables, functions, types, etc.
 				map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-
-				-- Fuzzy find all the symbols in your current workspace.
-				--  Similar to document symbols, except searches over your entire project.
-				--map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
-				-- Rename the variable under your cursor.
-				--  Most Language Servers support renaming across files, etc.
 				map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-
-				-- Execute a code action, usually your cursor needs to be on top of an error
-				-- or a suggestion from your LSP for this to activate.
 				map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
-				-- Opens a popup that displays documentation about the word under your cursor
-				--  See `:help K` for why this keymap.
+				-- Documentation hover (mapped to both K and Ctrl+k)
 				map("K", vim.lsp.buf.hover, "Hover Documentation")
+				map("<C-k>", vim.lsp.buf.hover, "Hover Documentation")
 
-				-- WARN: This is not Goto Definition, this is Goto Declaration.
-				--  For example, in C this would take you to the header.
 				map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-
-				map("K", vim.lsp.buf.hover, "Show documentation for what is under the cursor")
 			end,
 		})
+
 		-- used to enable autocompletion (assign to every lsp server config)
 		local capabilities = cmp_nvim_lsp.default_capabilities()
+		-- Explicitly ensure markdown support is claimed for styled documentation
+		capabilities.textDocument = capabilities.textDocument or {}
+		capabilities.textDocument.hover = capabilities.textDocument.hover or {}
+		capabilities.textDocument.hover.contentFormat = { "markdown", "plaintext" }
 
 		vim.diagnostic.config({
 			signs = {
@@ -78,6 +63,18 @@ return {
 					[vim.diagnostic.severity.INFO] = " ",
 				},
 			},
+		})
+
+		-- used to enable autocompletion (assign to every lsp server config)
+		local capabilities = cmp_nvim_lsp.default_capabilities()
+		-- Explicitly ensure markdown support is claimed for styled documentation
+		capabilities.textDocument = capabilities.textDocument or {}
+		capabilities.textDocument.hover = capabilities.textDocument.hover or {}
+		capabilities.textDocument.hover.contentFormat = { "markdown", "plaintext" }
+
+		-- Global LSP configuration
+		vim.lsp.config("*", {
+			capabilities = capabilities,
 		})
 
 		-- Configure servers with custom settings using vim.lsp.config
@@ -93,8 +90,7 @@ return {
 			vim.lsp.config(server_name, config)
 		end
 
-		-- Configure custom servers before mason-lspconfig enables them
-		-- Svelte with special config
+		-- Configure custom servers
 		setup_server("svelte", {
 			on_attach = function(client, bufnr)
 				vim.api.nvim_create_autocmd("BufWritePost", {
@@ -106,12 +102,10 @@ return {
 			end,
 		})
 
-		-- GraphQL with custom filetypes
 		setup_server("graphql", {
 			filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
 		})
 
-		-- Emmet with custom filetypes
 		setup_server("emmet_ls", {
 			filetypes = {
 				"html",
@@ -125,7 +119,6 @@ return {
 			},
 		})
 
-		-- Lua LSP with special settings
 		setup_server("lua_ls", {
 			settings = {
 				Lua = {
@@ -139,7 +132,7 @@ return {
 			},
 		})
 
-		-- Setup default config for all other servers
-		setup_server("*", {})
+		-- setup fidget
+		require("fidget").setup({})
 	end,
 }
