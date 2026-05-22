@@ -5,6 +5,7 @@ return {
 		local conform = require("conform")
 
 		conform.setup({
+			log_level = vim.log.levels.DEBUG,
 			formatters_by_ft = {
 				sh = { "shfmt" },
 				bash = { "shfmt" },
@@ -46,7 +47,11 @@ return {
 				lsp_fallback = true,
 				async = false,
 				timeout_ms = 1000,
-			})
+			}, function(err)
+				if err then
+					vim.notify("Formatting error: " .. tostring(err), vim.log.levels.ERROR)
+				end
+			end)
 		end, { desc = "Format file or range (in visual mode)" })
 	end,
 }
