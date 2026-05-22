@@ -6,7 +6,7 @@ return {
 		"windwp/nvim-ts-autotag",
 	},
 	config = function()
-		local treesitter = require("nvim-treesitter.configs")
+		local treesitter = require("nvim-treesitter")
 		treesitter.setup({
 			-- A list of parser names, or "all"
 			ensure_installed = {
@@ -58,7 +58,7 @@ return {
 				-- Set this to `true` if you depend on "syntax" being enabled (like for indentation).
 				-- Using this option may slow down your editor, and you may see some duplicate highlights.
 				-- Instead of true it can also be a list of languages
-				additional_vim_regex_highlighting = { "markdown" },
+				additional_vim_regex_highlighting = false,
 			},
 			incremental_selection = {
 				enable = true,
@@ -71,7 +71,7 @@ return {
 			},
 		})
 
-		local treesitter_parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+		local treesitter_parser_config = require("nvim-treesitter.parsers")
 		treesitter_parser_config.templ = {
 			install_info = {
 				url = "https://github.com/vrischmann/tree-sitter-templ.git",
