@@ -40,6 +40,10 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
+-- Spellcheck configuration
+vim.opt.spelllang = { "en", "it" }
+vim.opt.spell = false
+
 -- Use system clipboard for yank/paste operations
 --vim.opt.clipboard = "unnamedplus"
 

@@ -68,6 +68,12 @@ vim.keymap.set("n", "<leader>cd", ":Copilot disable<CR>")
 -- remap write command
 vim.keymap.set("n", "<leader>w", ":w<CR>")
 
+-- Toggle spellcheck
+vim.keymap.set("n", "<leader>ts", function()
+	vim.opt.spell = not (vim.opt.spell:get())
+	print("Spellcheck: " .. (vim.opt.spell:get() and "On" or "Off"))
+end, { desc = "Toggle [T]oggle [S]pellcheck" })
+
 vim.keymap.set("n", "<leader><leader>", ":so<CR>")
 
 -- Diagnostic keymaps
