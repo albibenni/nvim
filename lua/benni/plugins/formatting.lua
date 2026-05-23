@@ -26,6 +26,7 @@ return {
 				go = { "gofmt" },
 				lua = { "stylua" },
 				python = { "isort", "black" },
+				java = { "google-java-format" },
 			},
 			formatters = {
 				shfmt = {

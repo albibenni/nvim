@@ -81,6 +81,7 @@ return {
 				"yamlfmt", -- yaml format
 				"clang-format", -- c c++ format
 				"shfmt", -- bash formatter
+				"google-java-format", -- java formatter
 			},
 		})
 	end,
