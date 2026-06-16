@@ -21,19 +21,6 @@ return {
 		-- 	},
 		-- },
 
-		-- import mason-lspconfig
-		local mason_lspconfig = require("mason-lspconfig")
-		mason_lspconfig.opts = {
-			automatic_enable = {
-				exclude = {
-					--needs external plugin
-					"jdtls",
-				},
-			},
-		}
-
-		local mason_tool_installer = require("mason-tool-installer")
-
 		-- enable mason and configure icons
 		mason.setup({
 			ui = {
@@ -45,7 +32,15 @@ return {
 			},
 		})
 
+		-- import mason-lspconfig
+		local mason_lspconfig = require("mason-lspconfig")
 		mason_lspconfig.setup({
+			automatic_enable = {
+				exclude = {
+					--needs external plugin
+					"jdtls",
+				},
+			},
 			-- list of servers for mason to install
 			ensure_installed = {
 				"lua_ls",
@@ -62,8 +57,13 @@ return {
 				"gopls",
 				"zls",
 				"rust_analyzer",
+				"jdtls",
+				"bashls", -- bash
+				"eslint",
 			},
 		})
+
+		local mason_tool_installer = require("mason-tool-installer")
 
 		mason_tool_installer.setup({
 			ensure_installed = {
@@ -80,6 +80,8 @@ return {
 				"jsonlint", -- json lint
 				"yamlfmt", -- yaml format
 				"clang-format", -- c c++ format
+				"shfmt", -- bash formatter
+				"google-java-format", -- java formatter
 			},
 		})
 	end,

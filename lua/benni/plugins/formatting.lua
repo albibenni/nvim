@@ -6,6 +6,8 @@ return {
 
 		conform.setup({
 			formatters_by_ft = {
+				sh = { "shfmt" },
+				bash = { "shfmt" },
 				javascript = { "prettier" },
 				typescript = { "prettier" },
 				javascriptreact = { "prettier" },
@@ -23,6 +25,15 @@ return {
 				go = { "gofmt" },
 				lua = { "stylua" },
 				python = { "isort", "black" },
+				java = { "google-java-format" },
+			},
+			formatters = {
+				shfmt = {
+					prepend_args = { "-i", "2" }, -- indent with 2 spaces
+					-- other options: "-i", "4" for 4 spaces
+					-- "-ci" for switch case indentation
+					-- "-bn" for binary ops like && and | on next line
+				},
 			},
 			-- format_on_save = {
 			-- 	lsp_fallback = true,
@@ -36,7 +47,11 @@ return {
 				lsp_fallback = true,
 				async = false,
 				timeout_ms = 1000,
-			})
+			}, function(err)
+				if err then
+					vim.notify("Formatting error: " .. tostring(err), vim.log.levels.ERROR)
+				end
+			end)
 		end, { desc = "Format file or range (in visual mode)" })
 	end,
 }
