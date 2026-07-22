@@ -2,8 +2,10 @@ local M = {}
 
 -- Helper to get visual selection
 local function get_visual_selection()
-	local _, csrow, cscol, _ = table.unpack(vim.fn.getpos("'<"))
-	local _, cerow, cecol, _ = table.unpack(vim.fn.getpos("'>"))
+	---@diagnostic disable-next-line: deprecated
+	local _, csrow, cscol, _ = unpack(vim.fn.getpos("'<"))
+	---@diagnostic disable-next-line: deprecated
+	local _, cerow, cecol, _ = unpack(vim.fn.getpos("'>"))
 
 	-- Adjust for line lengths
 	local lines = vim.fn.getline(csrow, cerow)
