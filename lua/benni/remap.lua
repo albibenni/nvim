@@ -90,3 +90,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.keymap.set("n", "<C-f>", function()
 	require("benni.tmux_sessionizer").pick_and_switch()
 end, { desc = "Telescope tmux sessionizer" })
+
+-- Schedule task to Todoist from visual selection
+vim.keymap.set("v", "<leader>td", function()
+	-- Need to exit visual mode first so that '< and '> markers are set correctly
+	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "x", false)
+	require("benni.todoist").schedule_task()
+end, { desc = "Schedule Todoist task from visual selection" })
+
