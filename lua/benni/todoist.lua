@@ -60,6 +60,11 @@ function M.schedule_task()
 			return "in " .. (tonumber(months) * 30) .. " days"
 		end
 
+		local days = s:match("^(%d+)d$")
+		if days then
+			return "in " .. days .. " days"
+		end
+		
 		return s
 	end
 
@@ -70,7 +75,7 @@ function M.schedule_task()
 		end
 
 		-- 2. Prompt for due date
-		vim.ui.input({ prompt = "Schedule for (e.g. tod, tom, 1w, 1m) [Leave empty for Inbox]: " }, function(due_string)
+		vim.ui.input({ prompt = "Schedule for (e.g. tod, tom, 1d, 1w, 1m) [Leave empty for Inbox]: " }, function(due_string)
 			due_string = parse_schedule(due_string)
 
 			-- 3. Prompt for Priority
