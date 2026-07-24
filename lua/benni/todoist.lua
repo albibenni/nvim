@@ -82,9 +82,9 @@ function M.schedule_task()
 
 			-- 3. Prompt for Priority
 			local priorities = {
+				{ name = "P3 (Medium / Blue)", value = 2 },
 				{ name = "P1 (Urgent / Red)", value = 4 },
 				{ name = "P2 (High / Orange)", value = 3 },
-				{ name = "P3 (Medium / Blue)", value = 2 },
 				{ name = "P4 (Normal / Grey)", value = 1 },
 			}
 
@@ -104,13 +104,19 @@ function M.schedule_task()
 				curl.get("https://api.todoist.com/api/v1/projects", {
 					headers = { Authorization = "Bearer " .. token },
 					callback = vim.schedule_wrap(function(res)
-						local project_options = { { name = "Default (Inbox)", id = nil } }
+						local project_options = {}
+						local default_inbox = { name = "Default (Inbox)", id = nil }
+						local coding_project = nil
 
 						if res.status == 200 then
 							local body = vim.fn.json_decode(res.body)
 							local projects = body.results or body
 							for _, p in ipairs(projects) do
-								table.insert(project_options, p)
+								if p.name == "Coding" then
+									coding_project = p
+								else
+									table.insert(project_options, p)
+								end
 							end
 						else
 							vim.notify(
@@ -119,6 +125,11 @@ function M.schedule_task()
 									.. "). Proceeding with default Inbox.",
 								vim.log.levels.WARN
 							)
+						end
+
+						table.insert(project_options, 1, default_inbox)
+						if coding_project then
+							table.insert(project_options, 1, coding_project)
 						end
 
 						vim.ui.select(project_options, {
