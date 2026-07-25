@@ -103,6 +103,9 @@ function M.schedule_task()
 				-- 4. Fetch Projects & Prompt
 				curl.get("https://api.todoist.com/api/v1/projects", {
 					headers = { Authorization = "Bearer " .. token },
+					on_error = vim.schedule_wrap(function(err)
+						vim.notify("Network error fetching Todoist projects: " .. (err.message or tostring(err)), vim.log.levels.ERROR)
+					end),
 					callback = vim.schedule_wrap(function(res)
 						local project_options = {}
 						local default_inbox = { name = "Default (Inbox)", id = nil }
@@ -166,6 +169,9 @@ function M.schedule_task()
 									["Content-Type"] = "application/json",
 								},
 								body = vim.fn.json_encode(payload),
+								on_error = vim.schedule_wrap(function(err)
+									vim.notify("Network error creating Todoist task: " .. (err.message or tostring(err)), vim.log.levels.ERROR)
+								end),
 								callback = vim.schedule_wrap(function(create_res)
 									if create_res.status == 200 or create_res.status == 204 then
 										vim.notify("✅ Task successfully added to Todoist!", vim.log.levels.INFO)
