@@ -5,7 +5,6 @@ return {
 		local conform = require("conform")
 
 		conform.setup({
-			log_level = vim.log.levels.DEBUG,
 			formatters_by_ft = {
 				sh = { "shfmt" },
 				bash = { "shfmt" },
