@@ -203,4 +203,76 @@ function M.schedule_task()
 	end)
 end
 
+function M.search_tasks()
+	local token = os.getenv("TODOIST_API_TOKEN")
+	if not token then
+		vim.notify("TODOIST_API_TOKEN environment variable is not set.", vim.log.levels.ERROR)
+		return
+	end
+
+	vim.ui.input({ prompt = "Search Todoist (or leave empty for 'today'): " }, function(search_term)
+		if not search_term or search_term == "" then
+			search_term = "today"
+		end
+
+		local query_str = search_term
+		if search_term:lower() ~= "today" then
+			query_str = "search: " .. search_term
+		end
+
+		vim.notify("Searching Todoist for: '" .. search_term .. "'...", vim.log.levels.INFO)
+
+		local curl = require("plenary.curl")
+		curl.get("https://api.todoist.com/api/v1/tasks/filter", {
+			query = { query = query_str },
+			headers = { Authorization = "Bearer " .. token },
+			on_error = vim.schedule_wrap(function(err)
+				vim.notify("Network error fetching tasks: " .. (err.message or tostring(err)), vim.log.levels.ERROR)
+			end),
+			callback = vim.schedule_wrap(function(res)
+				if res.status ~= 200 then
+					vim.notify("Error fetching tasks (Status: " .. tostring(res.status) .. ").", vim.log.levels.ERROR)
+					return
+				end
+
+				local body = vim.fn.json_decode(res.body)
+				local tasks = body.results or body
+
+				if type(tasks) ~= "table" then
+					vim.notify("Invalid API response format.", vim.log.levels.ERROR)
+					return
+				end
+
+				if #tasks == 0 then
+					vim.notify("No matching tasks found for '" .. search_term .. "'.", vim.log.levels.INFO)
+					return
+				end
+
+				local formatted_tasks = {}
+				for _, t in ipairs(tasks) do
+					-- Make sure it's actually a task object with content and priority
+					if t.content and t.priority then
+						local due = "No due date"
+						if t.due and t.due.date then
+							due = t.due.date
+						end
+						table.insert(formatted_tasks, string.format("[%s] %s (Priority %d)", due, t.content, t.priority))
+					end
+				end
+
+				table.sort(formatted_tasks)
+
+				vim.ui.select(formatted_tasks, {
+					prompt = "Found " .. #formatted_tasks .. " task(s):",
+				}, function(choice)
+					if choice then
+						vim.fn.setreg("+", choice)
+						vim.notify("Yanked task to clipboard!", vim.log.levels.INFO)
+					end
+				end)
+			end),
+		})
+	end)
+end
+
 return M

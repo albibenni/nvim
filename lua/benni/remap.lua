@@ -107,3 +107,8 @@ vim.keymap.set("v", "<leader>td", function()
 	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "x", false)
 	require("benni.todoist").schedule_task()
 end, { desc = "Schedule Todoist task from visual selection" })
+
+-- Search Todoist tasks
+vim.keymap.set("n", "<leader>ts", function()
+	require("benni.todoist").search_tasks()
+end, { desc = "Search Todoist tasks" })
