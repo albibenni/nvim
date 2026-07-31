@@ -16,8 +16,6 @@ return {
 		-- Neovim 0.11+ way to style floating windows globally
 		vim.o.winborder = "rounded"
 
-
-
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 			callback = function(event)
@@ -38,6 +36,18 @@ return {
 				map("<C-k>", vim.lsp.buf.hover, "Hover Documentation")
 
 				map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+
+				-- Biome: Dedicated Organize Imports mapping
+				map("<leader>co", function()
+					-- Run biome check --write explicitly for this file
+					local file = vim.api.nvim_buf_get_name(0)
+					if file ~= "" then
+						vim.notify("Running Biome Check...", vim.log.levels.INFO)
+						vim.fn.system("npx @biomejs/biome check --write " .. vim.fn.shellescape(file))
+						vim.cmd("edit!") -- reload the buffer
+						vim.notify("Biome: Imports Organized & Fixed!", vim.log.levels.INFO)
+					end
+				end, "[C]ode [O]rganize imports (Biome)")
 			end,
 		})
 
@@ -125,6 +135,8 @@ return {
 				},
 			},
 		})
+
+		setup_server("biome")
 
 		-- setup fidget
 		require("fidget").setup({})

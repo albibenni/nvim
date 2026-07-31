@@ -59,7 +59,7 @@ return {
 				"rust_analyzer",
 				"jdtls",
 				"bashls", -- bash
-				"eslint",
+				"biome",
 			},
 		})
 
@@ -67,12 +67,11 @@ return {
 
 		mason_tool_installer.setup({
 			ensure_installed = {
-				"prettier", -- prettier formatter
+				"prettier", -- prettier formatter (kept for markdown/html)
 				"stylua", -- lua formatter
 				"yamlfmt", -- yml formatter
 				"golangci-lint", -- go linter
 				--"goimports", --go formatter
-				"eslint_d", -- js lint
 				"cpplint", -- c c++ lint
 				"isort", -- python formatter
 				"black", -- python formatter
