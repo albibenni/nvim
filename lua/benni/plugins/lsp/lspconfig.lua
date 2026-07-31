@@ -76,6 +76,13 @@ return {
 		capabilities.textDocument.hover = capabilities.textDocument.hover or {}
 		capabilities.textDocument.hover.contentFormat = { "markdown", "plaintext" }
 
+		-- Disable Neovim's internal file watcher dynamic registration.
+		-- This is the ultimate fix for the "inotify: No such file or directory" error on Linux
+		-- when Rust creates/deletes temporary files.
+		capabilities.workspace = capabilities.workspace or {}
+		capabilities.workspace.didChangeWatchedFiles = capabilities.workspace.didChangeWatchedFiles or {}
+		capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
+
 		-- Global LSP configuration
 		vim.lsp.config("*", {
 			capabilities = capabilities,
@@ -137,6 +144,16 @@ return {
 		})
 
 		setup_server("biome")
+
+		setup_server("rust_analyzer", {
+			settings = {
+				["rust-analyzer"] = {
+					files = {
+						excludeDirs = { ".cargo", ".git", "node_modules", "target", "src-tauri/target" },
+					},
+				},
+			},
+		})
 
 		-- setup fidget
 		require("fidget").setup({})
