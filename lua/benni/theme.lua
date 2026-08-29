@@ -1,5 +1,35 @@
 local M = {}
 
+local transparent_highlight_groups = {
+	"Normal",
+	"NormalNC",
+	"NormalFloat",
+	"FloatBorder",
+	"SignColumn",
+	"EndOfBuffer",
+	"FoldColumn",
+	"LineNr",
+	"WinBar",
+	"WinBarNC",
+	"StatusLine",
+	"StatusLineNC",
+	"TabLine",
+	"TabLineFill",
+	"TabLineSel",
+	"Pmenu",
+}
+
+local function apply_transparency()
+	for _, group in ipairs(transparent_highlight_groups) do
+		vim.api.nvim_set_hl(0, group, { bg = "none", ctermbg = "none" })
+	end
+end
+
+local function apply_transparency_after_theme()
+	apply_transparency()
+	vim.schedule(apply_transparency)
+end
+
 local valid_themes = {
 	latte = true,
 	frappe = true,
@@ -37,6 +67,11 @@ end
 
 function M.apply()
 	local theme = M.current()
+	local transparent_group = vim.api.nvim_create_augroup("BenniThemeTransparency", { clear = true })
+	vim.api.nvim_create_autocmd("ColorScheme", {
+		group = transparent_group,
+		callback = apply_transparency_after_theme,
+	})
 
 	local native_themes = {
 		lumon = { colorscheme = "lumon" },
@@ -60,6 +95,7 @@ function M.apply()
 		vim.opt.background = theme == "white" and "light" or "dark"
 		if native_theme.setup then native_theme.setup() end
 		vim.cmd.colorscheme(native_theme.colorscheme)
+		apply_transparency_after_theme()
 		return
 	end
 
@@ -73,6 +109,7 @@ function M.apply()
 			},
 		})
 		vim.cmd.colorscheme("tokyonight")
+		apply_transparency_after_theme()
 		return
 	end
 
@@ -103,6 +140,7 @@ function M.apply()
 			end,
 		})
 		vim.cmd.colorscheme("tokyonight")
+		apply_transparency_after_theme()
 		return
 	end
 
@@ -111,6 +149,7 @@ function M.apply()
 			transparent_background = true,
 		})
 		vim.cmd.colorscheme("night-owl")
+		apply_transparency_after_theme()
 		return
 	end
 
@@ -119,6 +158,7 @@ function M.apply()
 		transparent_background = true,
 	})
 	vim.cmd.colorscheme("catppuccin")
+	apply_transparency_after_theme()
 end
 
 return M
