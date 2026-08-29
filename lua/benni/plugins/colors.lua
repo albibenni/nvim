@@ -5,6 +5,21 @@ return {
 	dependencies = {
 		"folke/tokyonight.nvim",
 		"oxfist/night-owl.nvim",
+		"omacom-io/lumon.nvim",
+		"bjarneo/ethereal.nvim",
+		"neanias/everforest-nvim",
+		"ellisonleao/gruvbox.nvim",
+		"xero/miasma.nvim",
+		{ "bjarneo/hackerman.nvim", dependencies = { "bjarneo/aether.nvim" } },
+		"ribru17/bamboo.nvim",
+		"rebelot/kanagawa.nvim",
+		"EdenEast/nightfox.nvim",
+		"tahayvr/matteblack.nvim",
+		"bjarneo/vantablack.nvim",
+		"gthelding/monokai-pro.nvim",
+		"OldJobobo/retro-82.nvim",
+		{ "rose-pine/neovim", name = "rose-pine" },
+		"bjarneo/white.nvim",
 	},
 	config = function()
 		require("benni.theme").apply()

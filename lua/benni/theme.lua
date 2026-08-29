@@ -38,20 +38,28 @@ end
 function M.apply()
 	local theme = M.current()
 
-	local palettes = {
-		lumon = { "#16242d", "#d6e2ee", "#8bc9eb" }, ethereal = { "#060b1e", "#ffcead", "#7d82d9" }, everforest = { "#2d353b", "#d3c6aa", "#7fbbb3" }, gruvbox = { "#282828", "#d4be98", "#7daea3" },
-		miasma = { "#222222", "#c2c2b0", "#78824b" }, hackerman = { "#0b0c16", "#ddf7ff", "#82fb9c" }, ["osaka-jade"] = { "#111c18", "#c1c497", "#509475" }, kanagawa = { "#1f1f28", "#dcd7ba", "#dcd7ba" },
-		nord = { "#2e3440", "#d8dee9", "#81a1c1" }, ["matte-black"] = { "#121212", "#bebebe", "#e68e0d" }, vantablack = { "#000000", "#ffffff", "#8d8d8d" }, ristretto = { "#2c2525", "#e6d9db", "#f38d70" },
-		["retro-82"] = { "#05182e", "#f6dcac", "#faa968" }, ["rose-pine"] = { "#191724", "#e0def4", "#c4a7e7" }, white = { "#ffffff", "#000000", "#6e6e6e" },
+	local native_themes = {
+		lumon = { colorscheme = "lumon" },
+		ethereal = { colorscheme = "ethereal" },
+		everforest = { colorscheme = "everforest", setup = function() require("everforest").setup({ background = "soft", transparent_background_level = 2 }) end },
+		gruvbox = { colorscheme = "gruvbox", setup = function() require("gruvbox").setup({ transparent_mode = true }) end },
+		miasma = { colorscheme = "miasma" },
+		hackerman = { colorscheme = "hackerman" },
+		["osaka-jade"] = { colorscheme = "bamboo", setup = function() require("bamboo").setup({ style = "vulgaris", transparent = true }) end },
+		kanagawa = { colorscheme = "kanagawa", setup = function() require("kanagawa").setup({ transparent = true }) end },
+		nord = { colorscheme = "nordfox" },
+		["matte-black"] = { colorscheme = "matteblack" },
+		vantablack = { colorscheme = "vantablack", setup = function() require("vantablack").setup({ transparent = true }) end },
+		ristretto = { colorscheme = "monokai-pro", setup = function() require("monokai-pro").setup({ filter = "ristretto", transparent_background = true }) end },
+		["retro-82"] = { colorscheme = "retro-82" },
+		["rose-pine"] = { colorscheme = "rose-pine", setup = function() require("rose-pine").setup({ variant = "main", disable_background = true }) end },
+		white = { colorscheme = "white" },
 	}
-	local palette = palettes[theme]
-	if palette then
+	local native_theme = native_themes[theme]
+	if native_theme then
 		vim.opt.background = theme == "white" and "light" or "dark"
-		vim.api.nvim_set_hl(0, "Normal", { bg = palette[1], fg = palette[2] })
-		vim.api.nvim_set_hl(0, "NormalFloat", { bg = palette[1], fg = palette[2] })
-		vim.api.nvim_set_hl(0, "FloatBorder", { bg = palette[1], fg = palette[3] })
-		vim.api.nvim_set_hl(0, "Visual", { bg = palette[3], fg = palette[1] })
-		vim.api.nvim_set_hl(0, "Comment", { fg = palette[3], italic = true })
+		if native_theme.setup then native_theme.setup() end
+		vim.cmd.colorscheme(native_theme.colorscheme)
 		return
 	end
 
