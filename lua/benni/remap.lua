@@ -34,6 +34,15 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]]) -- delete into black hole reg
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
+-- Open an explicitly yanked visual selection in the configured AI chat.
+vim.keymap.set("v", "<leader>ai", function()
+	vim.cmd([[normal! "+y]])
+	vim.fn.jobstart(
+		{ (vim.env.HOME or "") .. "/.local/bin/ask-ai", "--from-clipboard" },
+		{ detach = true }
+	)
+end, { desc = "Open selection in AI chat" })
+
 -- This is going to get me cancelled
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
