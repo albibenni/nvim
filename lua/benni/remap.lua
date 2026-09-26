@@ -77,6 +77,12 @@ vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, { desc = "Show [H]elp f
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
 
+-- Open an explicitly yanked visual selection in the configured AI chat.
+vim.keymap.set("v", "<leader>ai", function()
+	vim.cmd([[normal! "+y]])
+	vim.fn.jobstart({ (vim.env.HOME or "") .. "/.local/bin/ask-ai", "--from-clipboard" }, { detach = true })
+end, { desc = "Open selection in AI chat" })
+
 -- Highlight when yanking (copying) text
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
@@ -97,4 +103,3 @@ vim.keymap.set("v", "<leader>td", function()
 	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "x", false)
 	require("benni.todoist").schedule_task()
 end, { desc = "Schedule Todoist task from visual selection" })
-
