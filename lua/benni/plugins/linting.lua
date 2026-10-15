@@ -3,6 +3,36 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
 		local lint = require("lint")
+		local vite_configs = {
+			"vite.config.ts",
+			"vite.config.js",
+			"vite.config.mts",
+			"vite.config.mjs",
+			"vite.config.cts",
+			"vite.config.cjs",
+		}
+		local vite_filetypes = {
+			javascript = true,
+			typescript = true,
+			javascriptreact = true,
+			typescriptreact = true,
+		}
+
+		lint.linters.vp_lint = vim.tbl_extend("force", lint.linters.oxlint, {
+			cmd = "vp",
+			args = { "lint", "--format", "github" },
+		})
+
+		local function try_lint()
+			local vite_root = vim.fs.root(0, vite_configs)
+
+			if vite_root and vite_filetypes[vim.bo.filetype] then
+				lint.try_lint("vp_lint", { cwd = vite_root })
+			else
+				lint.try_lint()
+			end
+		end
+
 		-- local goci = lint.linters.golangcilint
 		--
 		-- goci.args = {
@@ -48,7 +78,7 @@ return {
 		vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
 			group = lint_augroup,
 			callback = function()
-				lint.try_lint()
+				try_lint()
 			end,
 		})
 
@@ -60,7 +90,7 @@ return {
 		-- })
 		--
 		vim.keymap.set("n", "<leader>l", function()
-			lint.try_lint()
+			try_lint()
 		end, { desc = "Trigger linting for current file" })
 	end,
 }
